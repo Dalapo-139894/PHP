@@ -28,6 +28,7 @@
         <td>
             <input type="text" name="txtsearch" id="txtsearch">
             <button name="btnSearch" id="btnsearch" value="SUMBIT" type="submit">SUBMIT</button>
+            <button name="btnDelete" id="btnDelete" value="Delete" type="submit">DELETE</button>
         </td>
     </tr>
 
@@ -38,13 +39,23 @@
         if(isset($_POST["btnSearch"])) {
             $SearchBy = $_POST['search'];
             $value= $_POST['txtsearch'];
-
+            
             if($SearchBy == 'all') {
                 DisplayAll();
             }
+
             else {
                 DisplayBySearch($SearchBy,$value);
             }
+
+        }
+
+        if(isset($_POST ["btnDelete"])){
+            $SearchBy = $_POST['search'];
+            $value= $_POST['txtsearch'];
+
+            DeleteData($SearchBy,$value);
+
         }
 
         function DisplayAll() {
@@ -153,6 +164,35 @@
             }
             
         }
+
+        function DeleteData($SearchBy,$student) {
+            include ('server.php');
+            
+            
+            if ($SearchBy== 'lname') {
+                $Sql_Statement="Delete from tblregistration where lastname='".$student."'";
+
+                echo "<h1>Record successfully Deleted</h1>";
+            }
+
+            else if ($SearchBy== 'ID') {
+                $Sql_Statement="Delete from tblregistration where studentID='".$student."'";
+
+                echo "<h1>Record successfully Deleted</h1>";
+            }
+
+            else {
+                $Sql_Statement="Delete from tblregistration where firstname='".$student."'";
+
+                echo "<h1>Record successfully Deleted</h1>";
+            }   
+
+            $student = $dalapo -> query($Sql_Statement);
+            
+
+        }
+
+        
     ?>
 
 
